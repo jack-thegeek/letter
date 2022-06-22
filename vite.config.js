@@ -27,14 +27,13 @@ export default defineConfig({
         },
     },
     css: {
-        //css预处理
-        preprocessorOptions: {
+        cssPreprocessOptions: {
             scss: {
                 /*
                 引入var.scss全局预定义变量
                 '@import "@/assets/scss/globalVariable1.scss";@import "@/assets/scss/globalVariable2.scss";'
                  */
-                additionalData: '@import "@/assets/scss/main.scss";'
+                additionalData: '@import "./src/assets/scss/main.scss";'
             }
         }
     },
