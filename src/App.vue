@@ -1,5 +1,5 @@
 <script setup>
-    import NavBar from '@/components/NavBar.vue'
+
 </script>
 
 <template>
@@ -9,7 +9,7 @@
 
     <!--<router-view/>-->
     <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
+        <transition name="slide" mode="out-in">
             <component :is="Component"/>
         </transition>
     </router-view>

@@ -9,8 +9,10 @@
   "dependencies": {
     "@varlet/touch-emulator": "^1.27.15",
     "@varlet/ui": "^1.27.15",
+    "axios": "^0.27.2",
     "normalize.css": "^8.0.1",
     "vue": "^3.2.25",
+    "vue-axios": "^3.4.1",
     "vue-router": "^4.0.16",
     "workbox-recipes": "^6.2.4",
     "workbox-routing": "^6.2.4",

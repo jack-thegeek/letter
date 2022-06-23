@@ -15,3 +15,26 @@
 .fade-leave-to {
     opacity: 0;
 }
+
+.slide-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-leave-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-30%);
+  opacity: 0;
+}
+
+:root {
+    --app-bar-color: var(--color-primary);
+    --app-bar-title-padding: 0 3.2vw;
+    --app-bar-text-color: #fff;
+    --app-bar-height: 11vw;
+    --app-bar-left-gap: 1.6vw;
+    --app-bar-right-gap: 1.6vw;
+}

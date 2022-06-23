@@ -6,6 +6,8 @@ import '@varlet/touch-emulator'
 import '@varlet/ui/es/snackbar/style/index.js'
 import "./assets/scss/main.scss";
 
-createApp(App)
-    .use(router)
-    .mount('#app')
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
+
+//app.config.globalProperties.$axios = axios
