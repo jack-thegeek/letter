@@ -37,3 +37,10 @@
     --app-bar-left-gap: 1.6vw;
     --app-bar-right-gap: 1.6vw;
 }
+
+a, a:hover, a:active, a:visited, a:link, a:focus {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  background: none;
+  text-decoration: none;
+}
