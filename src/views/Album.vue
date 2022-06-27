@@ -1,6 +1,6 @@
 <template>
     <div>
-        <swiper :modules="[Virtual,Lazy]" :slides-per-view="1" :space-between="50" virtual>
+        <swiper :modules="modules" :slides-per-view="1" :space-between="50" virtual>
             <swiper-slide
                     v-for="(slideContent, index) in slides"
                     :key="index"
@@ -15,6 +15,8 @@
     import 'swiper/css';
     import 'swiper/css/lazy';
     import {Swiper, SwiperSlide} from 'swiper/vue';
+
+    const modules = [Virtual, Lazy]
 
     const slides = Array.from({length: 10}).map(
         (el, index) => `Slide ${index + 1}`
