@@ -1,12 +1,21 @@
 <script setup>
-import {ref} from 'vue'
+	import {ref, defineProps} from 'vue'
 
-let pop = ref(false)
+	// defineEmits和defineProps在<script setup>中自动可用，无需导入
+	const props = defineProps({
+		title: {
+			type: String,
+			default: 'default title'
+		},
+	})
+
+	let pop = ref(false)
+
 </script>
 
 <template>
 	<div>
-		<var-app-bar title="title" title-position="center">
+		<var-app-bar :title="title" title-position="center">
 			<template #left>
 				<var-button
 						round
@@ -39,12 +48,12 @@ let pop = ref(false)
 			padding: 10px 25px;
 		}
 
-		a:link, a:visited, a:hover {
+		a:link, a:hover {
 			color: black;
 			background-color: whitesmoke;
 		}
 
-		a:active {
+		a:visited, a:active {
 			color: #2c3e50;
 			background-color: whitesmoke;
 		}
