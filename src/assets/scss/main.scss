@@ -1,18 +1,50 @@
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
+@font-face {
+  font-family: Emoji;
+  src: local("Apple Color Emoji"), local("Segoe UI Emoji"), local("Segoe UI Symbol"), local("Noto Color Emoji");
+  unicode-range: U+1F000-1F644, U+203C-3299;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Emoji, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-text);
+  background-color: var(--color-body);
+}
+
+:root {
+  --color-body: #f8f9f9;
+  --color-text: #131124;
+  --color-primary: #1c3f73;
+
+  --popup-content-background-color: var(--color-body);
+
+  --app-bar-color: var(--color-primary);
+  --app-bar-title-padding: 0 3.2vw;
+  --app-bar-text-color: var(--color-body);
+  --app-bar-height: 11vw;
+  --app-bar-left-gap: 1.6vw;
+  --app-bar-right-gap: 1.6vw;
+
+  --ripple-cubic-bezier: cubic-bezier(0.68, 0.01, 0.62, 0.6);
+  --ripple-color: currentColor;
+}
+
+a, a:hover, a:active, a:visited, a:link, a:focus {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  background: none;
+  text-decoration: none;
 }
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 
 .slide-enter-active {
@@ -27,20 +59,4 @@
 .slide-leave-to {
   transform: translateX(-30%);
   opacity: 0;
-}
-
-:root {
-    --app-bar-color: var(--color-primary);
-    --app-bar-title-padding: 0 3.2vw;
-    --app-bar-text-color: #fff;
-    --app-bar-height: 11vw;
-    --app-bar-left-gap: 1.6vw;
-    --app-bar-right-gap: 1.6vw;
-}
-
-a, a:hover, a:active, a:visited, a:link, a:focus {
-  -webkit-tap-highlight-color: transparent;
-  outline: none;
-  background: none;
-  text-decoration: none;
 }

@@ -27,7 +27,7 @@
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
     #container {
         padding: 15px;
     }

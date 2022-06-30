@@ -29,16 +29,16 @@
 		</var-app-bar>
 		<var-popup v-model:show="pop" position="left">
 			<div class="menu" @click="pop=false">
-				<router-link to="/" v-ripple="{ color: '#ccc' }">Home</router-link>
-				<router-link to="/about" v-ripple="{ color: '#ccc' }">About</router-link>
-				<router-link to="/album" v-ripple="{ color: '#ccc' }">Album</router-link>
-				<router-link to="/chatroom" v-ripple="{ color: '#ccc' }">Chat</router-link>
+				<router-link to="/" v-ripple>Home</router-link>
+				<router-link to="/about" v-ripple>About</router-link>
+				<router-link to="/album" v-ripple>Album</router-link>
+				<router-link to="/chatroom" v-ripple>Chat</router-link>
 			</div>
 		</var-popup>
 	</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.menu {
 		padding: 20px 0;
 		width: 250px;
@@ -49,12 +49,12 @@
 		}
 
 		a:link, a:hover {
-			color: black;
+			color: var(--color-text);
 			background-color: whitesmoke;
 		}
 
 		a:visited, a:active {
-			color: #2c3e50;
+			color: var(--color-text);
 			background-color: whitesmoke;
 		}
 	}
