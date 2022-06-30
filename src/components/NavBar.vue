@@ -23,6 +23,7 @@ let pop = ref(false)
 				<router-link to="/" v-ripple="{ color: '#ccc' }">Home</router-link>
 				<router-link to="/about" v-ripple="{ color: '#ccc' }">About</router-link>
 				<router-link to="/album" v-ripple="{ color: '#ccc' }">Album</router-link>
+				<router-link to="/chatroom" v-ripple="{ color: '#ccc' }">Chat</router-link>
 			</div>
 		</var-popup>
 	</div>

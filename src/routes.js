@@ -10,6 +10,9 @@ const routes = [
   {
     path: '/album', meta: {title: 'Album'}, component: import('./views/Album.vue'),
   },
+    {
+    path: '/chatroom', meta: {title: 'Chatroom'}, component: import('./views/Chatroom.vue'),
+  },
   { path: '/:path(.*)', component: NotFound },
 ]
 
