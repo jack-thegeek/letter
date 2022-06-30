@@ -5,6 +5,7 @@ import 'normalize.css/normalize.css';
 import '@varlet/touch-emulator'
 import '@varlet/ui/es/snackbar/style/index.js'
 import "./assets/scss/main.scss";
+import '@material-design-icons/font/filled.css'
 
 const app = createApp(App)
 app.use(router)

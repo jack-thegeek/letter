@@ -7,6 +7,7 @@
     "preview": "vite preview --host"
   },
   "dependencies": {
+    "@material-design-icons/font": "^0.11.3",
     "@varlet/touch-emulator": "^1.27.15",
     "@varlet/ui": "^1.27.15",
     "axios": "^0.27.2",
