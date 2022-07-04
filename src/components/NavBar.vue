@@ -2,6 +2,11 @@
 import {ref, defineProps} from 'vue'
 import {StyleProvider} from '@varlet/ui'
 import configs from '../configs'
+import {storeToRefs} from 'pinia'
+import {useUserStore} from '../stores'
+
+const userStore = useUserStore()
+const { themeIndex } = storeToRefs(userStore)
 
 // defineEmits和defineProps在<script setup>中自动可用，无需导入
 const props = defineProps({
@@ -15,8 +20,15 @@ let pop = ref(false)
 let theme = ref(false)
 const themes = ref(configs.themes)
 
+const init = () => {
+    StyleProvider(themes.value[themeIndex.value].css)
+}
+
+init()
+
 const toggleTheme = (index) => {
     StyleProvider(themes.value[index].css)
+	userStore.setTheme(index)
 }
 
 </script>
