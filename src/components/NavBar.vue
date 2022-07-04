@@ -3,7 +3,7 @@ import {ref, defineProps} from 'vue'
 import {StyleProvider} from '@varlet/ui'
 import configs from '../configs'
 import {storeToRefs} from 'pinia'
-import {useUserStore} from '../stores'
+import { useUserStore } from '../store/user'
 
 const userStore = useUserStore()
 const { themeIndex } = storeToRefs(userStore)
