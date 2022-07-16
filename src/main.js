@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { createPinia  } from 'pinia'
 import store from './store/index'
 import router from './routes.js'
 import '@varlet/touch-emulator'

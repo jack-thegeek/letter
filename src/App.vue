@@ -1,34 +1,33 @@
 <script setup>
-    import NavBar from './components/NavBar.vue'
-    import {useRoute} from 'vue-router'
-    import {ref, watch} from 'vue'
+import NavBar from './components/NavBar.vue'
+import {useRouter} from 'vue-router'
+import {ref} from 'vue'
 
-    const route = useRoute()
+let loading = ref(true)
+const router = useRouter()
+router.beforeEach(() => {
+    loading.value = true
+})
+router.afterEach(() => {
+    loading.value = false
+})
 
-    let title = ref(route.meta.title)
-    watch(() => route.meta.title,
-        async newTitle => {
-            title.value = newTitle
-        }
-    )
 </script>
 
 <template>
-    <div>
-        <NavBar :title="title"/>
-        <div id="container">
-            <!--<router-view/>-->
-            <router-view v-slot="{ Component }">
-                <transition name="slide" mode="out-in">
-                    <component :is="Component"/>
-                </transition>
-            </router-view>
-        </div>
-    </div>
+	<div>
+		<NavBar/>
+		<var-loading :loading="loading">
+			<template #description>
+				加载中。。。
+			</template>
+			<div id="container">
+				<router-view v-slot="{ Component }">
+					<transition name="slide" mode="out-in">
+						<component :is="Component"/>
+					</transition>
+				</router-view>
+			</div>
+		</var-loading>
+	</div>
 </template>
-
-<style lang="scss" scoped>
-    #container {
-        padding: 15px;
-    }
-</style>

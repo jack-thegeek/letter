@@ -10,24 +10,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text);
   background-color: var(--color-body);
+  -webkit-overflow-scrolling: touch;
 }
 
-:root {
+html:root {
   --color-body: #f8f9f9;
-  --color-text: #131124;
-  --color-primary: #1c3f73;
+  --color-text: #ccc;
+  --card-background: url("./src/assets/images/letter_bg.jpg") no-repeat 0 0 / 100% auto;
 
   --popup-content-background-color: var(--color-body);
 
-  --app-bar-color: var(--color-primary);
-  --app-bar-title-padding: 0 3.2vw;
-  --app-bar-text-color: var(--color-body);
   --app-bar-height: 11vw;
   --app-bar-left-gap: 1.6vw;
   --app-bar-right-gap: 1.6vw;
-
-  --ripple-cubic-bezier: cubic-bezier(0.68, 0.01, 0.62, 0.6);
-  --ripple-color: currentColor;
 }
 
 * {
@@ -37,6 +32,12 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+#container {
+  background-color: #f2f3f7;
+  min-height: calc(100vh);
+  padding: 15px;
 }
 
 a, a:hover, a:active, a:visited, a:link, a:focus {

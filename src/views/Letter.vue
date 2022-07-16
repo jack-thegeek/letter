@@ -1,3 +1,16 @@
+<script setup>
+import configs from '../configs'
+import {ref, defineProps} from 'vue'
+const emoji_face = ref(configs.emoji_face)
+</script>
 <template>
-  <div>Letter</div>
+	<div>
+		<var-card title="本草纲目"
+		          description="如果华佗再世,崇洋都被医治,外邦来学汉字,激发我民族意识。马钱子、决明子、苍耳子，还有莲子；黄药子、苦豆子、川楝子，我要面子。用我的方式，改写一部历史。没什么别的事，跟着我念几个字。山药当归枸杞 GO，山药 当归 枸杞 GO，看我抓一把中药，服下一帖骄傲~"
+		/>
+		<img :src="'src/assets/images/emoji_face/'+face" alt="" v-for="face in emoji_face" width="26">
+	</div>
 </template>
+<style scoped lang="scss">
+
+</style>

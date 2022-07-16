@@ -4,9 +4,19 @@ import {StyleProvider} from '@varlet/ui'
 import configs from '../configs'
 import {storeToRefs} from 'pinia'
 import { useUserStore } from '../store/user'
+import {useRouter} from 'vue-router'
 
 const userStore = useUserStore()
 const { themeIndex } = storeToRefs(userStore)
+const router = useRouter()
+const routes = router.getRoutes()
+console.log(routes)
+let menu = ref([])
+routes.forEach((route) => {
+    if (route.name) {
+        menu.value.push({title: route.meta.title, icon: route.meta.icon, path: route.path})
+    }
+})
 
 // defineEmits和defineProps在<script setup>中自动可用，无需导入
 const props = defineProps({
@@ -21,21 +31,22 @@ let theme = ref(false)
 const themes = ref(configs.themes)
 
 const init = () => {
-    StyleProvider(themes.value[themeIndex.value].css)
+    const style = themes.value[themeIndex.value] ? themes.value[themeIndex.value].css : themes.value[0].css
+    StyleProvider(style)
 }
 
 init()
 
 const toggleTheme = (index) => {
     StyleProvider(themes.value[index].css)
-	userStore.setTheme(index)
+    userStore.setTheme(index)
 }
 
 </script>
 
 <template>
 	<div>
-		<var-app-bar :title="title" title-position="center">
+		<var-app-bar>
 			<template #left>
 				<var-button round text color="transparent" text-color="#fff" @click="pop = !pop">
 					<var-icon name="menu" :size="25"/>
@@ -63,26 +74,8 @@ const toggleTheme = (index) => {
 			<div class="popup-box">
 				<var-image ripple width="100%" fit="cover" src="https://varlet-varletjs.vercel.app/cat.jpg"/>
 				<div class="menu-list" @click="pop=false">
-					<router-link to="/" v-ripple>
-						<i class="material-icons">home</i><span class="menu">主 页</span>
-					</router-link>
-					<router-link to="/letter" v-ripple>
-						<i class="material-icons">description</i><span class="menu">情 书</span>
-					</router-link>
-					<router-link to="/footprint" v-ripple>
-						<i class="material-icons">explore</i><span class="menu">足 迹</span>
-					</router-link>
-					<router-link to="/art" v-ripple>
-						<i class="material-icons">style</i><span class="menu">画 集</span>
-					</router-link>
-					<router-link to="/album" v-ripple>
-						<i class="material-icons">photo_camera</i><span class="menu">相 册</span>
-					</router-link>
-					<router-link to="/chatroom" v-ripple>
-						<i class="material-icons">call</i><span class="menu">聊 天</span>
-					</router-link>
-					<router-link to="/about" v-ripple>
-						<i class="material-icons">help</i><span class="menu">关 于</span>
+					<router-link :to="route.path" v-ripple v-for="route in menu">
+						<i class="material-icons">{{route.icon}}</i><span class="menu">{{route.title}}</span>
 					</router-link>
 				</div>
 				<var-divider class="divider">
@@ -116,11 +109,12 @@ const toggleTheme = (index) => {
 		.router-link-exact-active {
 			color: var(--color-primary);
 			background: var(--menu-bg);
-			border-color:var(--menu-bg);
+			border-color: var(--menu-bg);
 		}
 
 		.menu {
 			padding-left: 20px;
+			letter-spacing: 5px;
 		}
 	}
 
