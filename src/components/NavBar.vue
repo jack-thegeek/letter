@@ -10,7 +10,6 @@ const userStore = useUserStore()
 const { themeIndex } = storeToRefs(userStore)
 const router = useRouter()
 const routes = router.getRoutes()
-console.log(routes)
 let menu = ref([])
 routes.forEach((route) => {
     if (route.name) {

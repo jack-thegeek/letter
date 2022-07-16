@@ -11,7 +11,6 @@ export const useUserStore = defineStore('user', {
             this.jwtToken = token
         },
         setTheme(index){
-            console.log(index);
             this.themeIndex = index
         }
     },

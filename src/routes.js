@@ -71,12 +71,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log('loading')
+    // console.log('loading')
     window.document.title = to.meta.title
     next()
 })
 
 router.afterEach(() => {
-    console.log('done')
+    // console.log('done')
 })
 export default router

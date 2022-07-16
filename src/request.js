@@ -1,39 +1,56 @@
-import Axios, { AxiosInstance } from 'axios'
+import Axios, {AxiosInstance} from 'axios'
+import {Snackbar} from '@varlet/ui'
+import {useRouter} from 'vue-router'
+import {useUserStore} from './store/user'
+import {storeToRefs} from 'pinia'
 
+const router = useRouter()
+const userStore = useUserStore()
 // const baseURL = 'https://vercel-mongodb-chi.vercel.app/api'
-const baseURL = 'https://v1.hitokoto.cn'
+const baseURL = 'http://127.0.0.1:3003/api'
 
 const request = Axios.create({
-  baseURL,
-  timeout: 10000 // 请求超时
+    baseURL,
+    timeout: 10000 // 请求超时
 })
 
 // 前置拦截器（发起请求之前的拦截）
 request.interceptors.request.use(
-  (config) => {
-
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
+    (config) => {
+        const {jwtToken} = storeToRefs(userStore)
+        if (jwtToken.value && jwtToken.value !== '') {
+            config.headers.Authorization = jwtToken.value
+        }
+        return config
+    },
+    (error) => {
+        console.log(error)
+    }
 )
 
 // 后置拦截器（获取到响应时的拦截）
 request.interceptors.response.use(
-  (response) => {
+    (response) => {
 
-    return response
-  },
-  (error) => {
-    if (error.response && error.response.data) {
+        return response
+    },
+    (error) => {
+        console.log(error)
+        if (error.response.msg) {
+            error.message = error.response.msg
+            Snackbar(error.message)
+        }
 
-      console.error(`[Axios Error]`, error.response)
-    } else {
+        if (error.response.status === 401) {
+            router.push('/login')
+        }
 
+        if (error.response.status === 403) {
+            router.push('/login')
+        }
+
+        return Promise.reject(error)
     }
-    return Promise.reject(error)
-  }
 )
 
 export default request
