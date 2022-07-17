@@ -1,9 +1,9 @@
 {
-  "name": "Vite PWA",
-  "short_name": "Vite PWA",
-  "description": "A Vite starter app ready-to-go as a Progressive Web App.",
-  "background_color": "#5a0fc8",
-  "theme_color": "#5a0fc8",
+  "name": "Love Letter",
+  "short_name": "Love Letter",
+  "description": "Love Letter App.",
+  "background_color": "#527288",
+  "theme_color": "#527288",
   "display": "standalone",
   "icons": [
     {
