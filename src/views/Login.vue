@@ -10,7 +10,7 @@ const userStore = useUserStore()
 // https://v1.hitokoto.cn
 const formData = reactive({
     name: 'jack',
-    password: 'abigail'
+    password: ''
 })
 
 const form = ref(null)
@@ -18,7 +18,6 @@ const form = ref(null)
 async function login() {
     // let validate = form.validate()
     // if (!validate) return
-    // const result = await axios.post('https://vercel-mongodb-chi.vercel.app/api/user/logon', formData)
     const result = await axios.post('/user/logon', formData)
     if (result.data.token) {
         userStore.setToken(result.data.token)

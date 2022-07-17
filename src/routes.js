@@ -1,4 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
+import {useUserStore} from './store/user'
+import {storeToRefs} from 'pinia'
 
 const routes = [
     {
@@ -71,9 +73,23 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    // console.log('loading')
-    window.document.title = to.meta.title
-    next()
+    const userStore = useUserStore()
+    const {jwtToken} = storeToRefs(userStore)
+    if (to.meta.title) {
+        document.title = to.meta.title
+    }
+    if (to.path == '/login') {
+        if (!jwtToken.value) {
+            return next()
+        } else {
+            return next({path: '/'})
+        }
+    }
+    if (!jwtToken.value) {
+        next({path: '/login'})
+    } else {
+        next()
+    }
 })
 
 router.afterEach(() => {

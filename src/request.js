@@ -6,8 +6,8 @@ import {storeToRefs} from 'pinia'
 
 const router = useRouter()
 const userStore = useUserStore()
-// const baseURL = 'https://vercel-mongodb-chi.vercel.app/api'
-const baseURL = 'http://127.0.0.1:3003/api'
+const baseURL = 'https://vercel-mongodb-chi.vercel.app/api'
+// const baseURL = 'http://127.0.0.1:3003/api'
 
 const request = Axios.create({
     baseURL,
@@ -31,7 +31,6 @@ request.interceptors.request.use(
 // 后置拦截器（获取到响应时的拦截）
 request.interceptors.response.use(
     (response) => {
-
         return response
     },
     (error) => {

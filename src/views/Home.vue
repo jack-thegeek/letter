@@ -1,7 +1,4 @@
 <script setup>
-import {ref} from 'vue'
-import axios from '@/request'
-import {useRouter} from 'vue-router'
 
 </script>
 
