@@ -3,11 +3,11 @@ import {ref, defineProps} from 'vue'
 import {StyleProvider} from '@varlet/ui'
 import configs from '../configs'
 import {storeToRefs} from 'pinia'
-import { useUserStore } from '../store/user'
+import {useUserStore} from '../store/user'
 import {useRouter} from 'vue-router'
 
 const userStore = useUserStore()
-const { themeIndex } = storeToRefs(userStore)
+const {themeIndex} = storeToRefs(userStore)
 const router = useRouter()
 const routes = router.getRoutes()
 let menu = ref([])
@@ -39,6 +39,11 @@ init()
 const toggleTheme = (index) => {
     StyleProvider(themes.value[index].css)
     userStore.setTheme(index)
+}
+
+const logout = () => {
+    userStore.clearToken()
+	router.push('/login')
 }
 
 </script>
@@ -76,6 +81,9 @@ const toggleTheme = (index) => {
 					<router-link :to="route.path" v-ripple v-for="route in menu">
 						<i class="material-icons">{{route.icon}}</i><span class="menu">{{route.title}}</span>
 					</router-link>
+					<a href="javascript:void(0);" @click="logout()">
+						<i class="material-icons">logout</i><span class="menu">登出</span>
+					</a>
 				</div>
 				<var-divider class="divider">
 					<span>power by Jack</span>

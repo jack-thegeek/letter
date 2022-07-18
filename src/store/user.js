@@ -10,7 +10,10 @@ export const useUserStore = defineStore('user', {
         setToken(token) {
             this.jwtToken = token
         },
-        setTheme(index){
+        clearToken() {
+            this.jwtToken = ''
+        },
+        setTheme(index) {
             this.themeIndex = index
         }
     },
