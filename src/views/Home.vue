@@ -5,7 +5,7 @@
 <template>
 	<div>
 		<div class="banner">
-			在一起已 <span class="num">997</span> 天啦
+			在一起已 997 天啦
 		</div>
 
 		<div class="group-name">纸短情长</div>
@@ -45,12 +45,8 @@
 	</div>
 </template>
 <style scoped lang="scss">
-
-	#container {
-		background-color: var(--hoki-100);
-	}
-
 	.banner {
+		font-family: writing;
 		height: 100px;
 		padding: 15px;
 		background: white;
@@ -58,10 +54,6 @@
 		border-radius: 5px;
 		text-align: center;
 		font-size: 28px;
-
-		.num {
-			font-family: -apple-system;
-		}
 	}
 
 	a {

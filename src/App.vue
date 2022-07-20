@@ -19,7 +19,7 @@ router.afterEach(() => {
 		<NavBar/>
 		<var-loading :loading="loading">
 			<template #description>
-				加载中。。。
+				努力加载中
 			</template>
 			<div id="container">
 				<router-view v-slot="{ Component }">

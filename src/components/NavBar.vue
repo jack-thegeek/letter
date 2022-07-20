@@ -81,7 +81,7 @@ const logout = () => {
 					<router-link :to="route.path" v-ripple v-for="route in menu">
 						<i class="material-icons">{{route.icon}}</i><span class="menu">{{route.title}}</span>
 					</router-link>
-					<a href="javascript:void(0);" @click="logout()">
+					<a href="javascript:void(0);" @click="logout()"  v-ripple>
 						<i class="material-icons">logout</i><span class="menu">登出</span>
 					</a>
 				</div>
