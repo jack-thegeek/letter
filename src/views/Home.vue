@@ -1,11 +1,20 @@
 <script setup>
+import dayjs from 'dayjs'
+import {ref} from 'vue'
+
+const start = dayjs('2020-05-20', 'YYYY-MM-DD')
+const today = dayjs()
+console.log(start)
+const days = today.diff(dayjs(start), 'days')
 
 </script>
 
 <template>
 	<div>
 		<div class="banner">
-			在一起已 997 天啦
+			<div class="title">
+				在一起已 {{days}} 天啦
+			</div>
 		</div>
 
 		<div class="group-name">纸短情长</div>
@@ -47,13 +56,18 @@
 <style scoped lang="scss">
 	.banner {
 		font-family: writing;
-		height: 100px;
+		height: 210px;
 		padding: 15px;
-		background: white;
 		margin: 10px 0 25px;
 		border-radius: 5px;
 		text-align: center;
 		font-size: 28px;
+		background: url("@/assets/images/banner_bg.jpg") 0 0 / 100% auto no-repeat;
+	}
+
+	.title {
+		margin-top: 40px;
+		-webkit-text-stroke: 0.3px #323c47;
 	}
 
 	a {

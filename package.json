@@ -11,6 +11,7 @@
     "@varlet/touch-emulator": "^1.27.15",
     "@varlet/ui": "^1.27.15",
     "axios": "^0.27.2",
+    "dayjs": "^1.11.4",
     "normalize.css": "^8.0.1",
     "peerjs": "^1.4.6",
     "pinia": "^2.0.14",
