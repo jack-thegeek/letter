@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: writing;
-  src: url('./src/assets/fonts/writing.ttf')
+  src: url('@/assets/fonts/writing.ttf')
 }
 
 body {
@@ -21,7 +21,7 @@ body {
 html:root {
   --color-body: #f8f9f9;
   --color-text: #ccc;
-  --card-background: url("./src/assets/images/letter_bg.jpg") no-repeat 0 0 / 100% auto;
+  --card-background: url("@/assets/images/letter_bg.jpg") no-repeat 0 0 / 100% auto;
 
   --popup-content-background-color: var(--color-body);
 
