@@ -1,19 +1,19 @@
 <script setup>
-import {ref, defineProps} from 'vue'
-import {StyleProvider} from '@varlet/ui'
+import { defineProps, ref } from 'vue'
+import { StyleProvider } from '@varlet/ui'
 import configs from '../configs'
-import {storeToRefs} from 'pinia'
-import {useUserStore} from '../store/user'
-import {useRouter} from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '../store/user'
+import { useRouter } from 'vue-router'
 
 const userStore = useUserStore()
-const {themeIndex} = storeToRefs(userStore)
+const { themeIndex } = storeToRefs(userStore)
 const router = useRouter()
 const routes = router.getRoutes()
 let menu = ref([])
 routes.forEach((route) => {
     if (route.name) {
-        menu.value.push({title: route.meta.title, icon: route.meta.icon, path: route.path})
+        menu.value.push({ title: route.meta.title, icon: route.meta.icon, path: route.path })
     }
 })
 
@@ -43,7 +43,7 @@ const toggleTheme = (index) => {
 
 const logout = () => {
     userStore.clearToken()
-	router.push('/login')
+    router.push('/login')
 }
 
 </script>
@@ -52,36 +52,36 @@ const logout = () => {
 	<div>
 		<var-app-bar>
 			<template #left>
-				<var-button round text color="transparent" text-color="#fff" @click="pop = !pop">
-					<var-icon name="menu" :size="25"/>
+				<var-button @click="pop = !pop" color="transparent" round text text-color="#fff">
+					<var-icon :size="25" name="menu"/>
 				</var-button>
 			</template>
 			<template #right>
-				<var-menu :offset-y="45" :offset-x="-135" v-model:show="theme">
-					<var-button round text color="transparent" text-color="#fff" @click="theme = !theme">
+				<var-menu :offset-x="-135" :offset-y="45" v-model:show="theme">
+					<var-button @click="theme = !theme" color="transparent" round text text-color="#fff">
 						<i class="material-icons">palette</i>
 					</var-button>
 					<template #menu>
 						<div class="theme-list">
 							<div @click="toggleTheme(index)" v-for="(theme, index) in themes">
-								<div v-ripple class="theme" :style="{'--bgColor':theme.code}">{{theme.name}}</div>
+								<div :style="{'--bgColor':theme.code}" class="theme" v-ripple>{{theme.name}}</div>
 							</div>
 						</div>
 					</template>
 				</var-menu>
-				<var-button round text color="transparent" text-color="#fff" @click="pop = !pop">
+				<var-button @click="pop = !pop" color="transparent" round text text-color="#fff">
 					<i class="material-icons">settings</i>
 				</var-button>
 			</template>
 		</var-app-bar>
-		<var-popup v-model:show="pop" position="left">
+		<var-popup position="left" v-model:show="pop">
 			<div class="popup-box">
-				<var-image ripple width="100%" fit="cover" src="https://varlet-varletjs.vercel.app/cat.jpg"/>
-				<div class="menu-list" @click="pop=false">
-					<router-link :to="route.path" v-ripple v-for="route in menu">
+				<var-image fit="cover" ripple src="https://varlet-varletjs.vercel.app/cat.jpg" width="100%"/>
+				<div @click="pop=false" class="menu-list">
+					<router-link :to="route.path" v-for="route in menu" v-ripple>
 						<i class="material-icons">{{route.icon}}</i><span class="menu">{{route.title}}</span>
 					</router-link>
-					<a href="javascript:void(0);" @click="logout()"  v-ripple>
+					<a @click="logout()" href="javascript:void(0);" v-ripple>
 						<i class="material-icons">logout</i><span class="menu">登出</span>
 					</a>
 				</div>

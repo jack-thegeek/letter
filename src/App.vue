@@ -1,7 +1,6 @@
 <script setup>
-import NavBar from './components/NavBar.vue'
-import {useRouter} from 'vue-router'
-import {ref} from 'vue'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 let loading = ref(true)
 const router = useRouter()
@@ -23,7 +22,7 @@ router.afterEach(() => {
 			</template>
 			<div id="container">
 				<router-view v-slot="{ Component }">
-					<transition name="slide" mode="out-in">
+					<transition mode="out-in" name="slide">
 						<component :is="Component"/>
 					</transition>
 				</router-view>

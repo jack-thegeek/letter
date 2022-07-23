@@ -1,8 +1,8 @@
 <script setup>
-import {reactive, ref} from 'vue'
+import { reactive, ref } from 'vue'
 import axios from '@/request'
-import {useRouter} from 'vue-router'
-import {useUserStore} from '../store/user'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '../store/user'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -30,22 +30,22 @@ async function login() {
 <template>
 	<div>
 		<var-form ref="form">
-			<var-input placeholder="请输入用户名"
-			           :rules="[v => !!v || '用户名不能为空']"
+			<var-input :rules="[v => !!v || '用户名不能为空']"
+			           placeholder="请输入用户名"
 			           v-model="formData.name"/>
-			<var-input type="password"
+			<var-input :rules="[v => !!v || '密码不能为空']"
 			           placeholder="请输入密码"
-			           :rules="[v => !!v || '密码不能为空']"
+			           type="password"
 			           v-model="formData.password"/>
 		</var-form>
 		<div class="btn">
-			<var-button block type="primary" @click="login">登录</var-button>
+			<var-button @click="login" block type="primary">登录</var-button>
 		</div>
 
 	</div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 	.btn {
 		margin-top: 30px;
 	}

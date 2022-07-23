@@ -1,64 +1,64 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import {useUserStore} from './store/user'
-import {storeToRefs} from 'pinia'
+import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from './store/user'
+import { storeToRefs } from 'pinia'
 
 const routes = [
     {
         path: '/',
         name: 'home',
-        meta: {title: '主页', icon: 'home'},
+        meta: { title: '主页', icon: 'home' },
         component: () => import('./views/Home.vue')
     },
     {
         path: '/letter',
         name: 'letter',
-        meta: {title: '情书', icon: 'favorite'},
+        meta: { title: '情书', icon: 'favorite' },
         component: () => import('./views/Letter.vue')
     },
     {
         path: '/art',
         name: 'art',
-        meta: {title: '画集', icon: 'style'},
+        meta: { title: '画集', icon: 'style' },
         component: () => import('./views/Art.vue')
     },
     {
         path: '/footprint',
         name: 'footprint',
-        meta: {title: '足迹', icon: 'explore'},
+        meta: { title: '足迹', icon: 'explore' },
         component: () => import('./views/Footprint.vue')
     },
     {
         path: '/album',
         name: 'album',
-        meta: {title: '相册', icon: 'photo_camera'},
+        meta: { title: '相册', icon: 'photo_camera' },
         component: () => import('./views/Album.vue')
     },
     {
         path: '/lottery',
         name: 'lottery',
-        meta: {title: '抽奖', icon: 'widgets'},
+        meta: { title: '抽奖', icon: 'widgets' },
         component: () => import('./views/Lottery.vue')
     },
     {
         path: '/todo',
         name: 'todo',
-        meta: {title: '愿望', icon: 'edit_calendar'},
+        meta: { title: '愿望', icon: 'edit_calendar' },
         component: () => import('./views/Todo.vue')
     },
     {
         path: '/chatroom',
-        meta: {title: '聊天', icon: 'call'},
+        meta: { title: '聊天', icon: 'call' },
         component: () => import('./views/Chatroom.vue')
     },
     {
         path: '/about',
         name: 'about',
-        meta: {title: '关于', icon: 'help'},
+        meta: { title: '关于', icon: 'help' },
         component: () => import('./views/About.vue')
     },
     {
         path: '/login',
-        meta: {title: '登录'},
+        meta: { title: '登录' },
         component: () => import('./views/Login.vue')
     },
     {
@@ -74,7 +74,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const userStore = useUserStore()
-    const {jwtToken} = storeToRefs(userStore)
+    const { jwtToken } = storeToRefs(userStore)
     if (to.meta.title) {
         document.title = to.meta.title
     }
@@ -82,11 +82,11 @@ router.beforeEach((to, from, next) => {
         if (!jwtToken.value) {
             return next()
         } else {
-            return next({path: '/'})
+            return next({ path: '/' })
         }
     }
     if (!jwtToken.value) {
-        next({path: '/login'})
+        next({ path: '/login' })
     } else {
         next()
     }

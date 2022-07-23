@@ -1,10 +1,9 @@
 <script setup>
 import axios from '@/request'
-import {reactive, ref} from 'vue'
+import { reactive } from 'vue'
 import 'swiper/css'
 import 'swiper/css/lazy'
-import {Swiper, SwiperSlide} from 'swiper/vue'
-import {Virtual, Lazy, Zoom} from 'swiper'
+import { Lazy, Virtual, Zoom } from 'swiper'
 
 const lazyOptions = {
     loadPrevNext: true,
@@ -29,21 +28,21 @@ let state = reactive({
 })
 
 const getImages = async () => {
-  const result = await axios.get('/art')
-  if (result.data) {
-    state.images = result.data
-  }
+    const result = await axios.get('/art')
+    if (result.data) {
+        state.images = result.data
+    }
 }
 
 getImages()
 </script>
 <template>
 	<div class="full-width">
-		<swiper @swiper="onSwiper" :modules="modules" :slides-per-view="1" :lazy="lazyOptions" virtual zoom>
+		<swiper :lazy="lazyOptions" :modules="modules" :slides-per-view="1" @swiper="onSwiper" virtual zoom>
 			<swiper-slide
-					v-for="(image, index) in state.images"
 					:key="index"
-					:virtualIndex="index">
+					:virtualIndex="index"
+					v-for="(image, index) in state.images">
 				<div class="swiper-zoom-container">
 					<img :data-src="image.url" alt="" class="swiper-lazy pic">
 				</div>
@@ -52,7 +51,7 @@ getImages()
 		</swiper>
 	</div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 	.pic {
 		width: 100%;
 		height: auto;

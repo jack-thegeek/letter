@@ -1,14 +1,13 @@
 <script setup>
 import axios from '@/request'
-import {reactive, ref} from 'vue'
-import {Virtual, Lazy} from 'swiper'
+import { reactive } from 'vue'
+import { Lazy, Virtual } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/lazy'
-import {Swiper, SwiperSlide} from 'swiper/vue'
 
 const modules = [Virtual, Lazy]
 let state = reactive({
-	images: []
+    images: []
 })
 
 const getImages = async () => {
@@ -22,12 +21,12 @@ getImages()
 </script>
 <template>
 	<div>
-		<swiper :modules="modules" :slides-per-view="1" virtual lazy>
+		<swiper :modules="modules" :slides-per-view="1" lazy virtual>
 			<swiper-slide
-					v-for="(image, index) in state.images"
 					:key="index"
-					:virtualIndex="index">
-				<img v-bind:data-src="image.src" alt="" class="swiper-lazy pic">
+					:virtualIndex="index"
+					v-for="(image, index) in state.images">
+				<img alt="" class="swiper-lazy pic" v-bind:data-src="image.src">
 				<div class="description">
 					{{image.title}}
 				</div>

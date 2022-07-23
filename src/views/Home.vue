@@ -1,10 +1,8 @@
 <script setup>
 import dayjs from 'dayjs'
-import {ref} from 'vue'
 
 const start = dayjs('2020-05-20', 'YYYY-MM-DD')
 const today = dayjs()
-console.log(start)
 const days = today.diff(dayjs(start), 'days')
 
 </script>
@@ -53,7 +51,7 @@ const days = today.diff(dayjs(start), 'days')
 
 	</div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 	.banner {
 		font-family: writing;
 		height: 210px;

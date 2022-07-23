@@ -1,18 +1,18 @@
 <template>
-	<div class="about" :class="`var-elevation--3`">
-		<img class="logo" src="@/assets/images/logo.svg" alt="">
+	<div :class="`var-elevation--3`" class="about">
+		<img alt="" class="logo" src="@/assets/images/logo.svg">
 		<h1>情 书</h1>
 		<p class="version">5.0</p>
 		<p class="content">何同学倾心制作</p>
 	</div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 	h1, p {
 		margin: 10px 0;
 	}
 
 	.about {
-        background-color: white;
+		background-color: white;
 		border-radius: 5px;
 		width: 85%;
 		min-height: 400px;
@@ -34,8 +34,8 @@
 		}
 
 		.version, .content {
-            font-weight: 100;
-            margin-top: 5px;
+			font-weight: 100;
+			margin-top: 5px;
 			color: rgba(0, 0, 0, 0.4);
 		}
 	}

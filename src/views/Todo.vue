@@ -1,3 +1,3 @@
 <template>
-  <div>愿望</div>
+	<div>愿望</div>
 </template>

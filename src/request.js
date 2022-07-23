@@ -1,8 +1,8 @@
-import Axios, {AxiosInstance} from 'axios'
-import {Snackbar} from '@varlet/ui'
-import {useRouter} from 'vue-router'
-import {useUserStore} from './store/user'
-import {storeToRefs} from 'pinia'
+import Axios from 'axios'
+import { Snackbar } from '@varlet/ui'
+import { useRouter } from 'vue-router'
+import { useUserStore } from './store/user'
+import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -17,7 +17,7 @@ const request = Axios.create({
 // 前置拦截器（发起请求之前的拦截）
 request.interceptors.request.use(
     (config) => {
-        const {jwtToken} = storeToRefs(userStore)
+        const { jwtToken } = storeToRefs(userStore)
         if (jwtToken.value && jwtToken.value !== '') {
             config.headers.Authorization = jwtToken.value
         }

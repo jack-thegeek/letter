@@ -1,3 +1,3 @@
 <template>
-  <div>足迹</div>
+	<div>足迹</div>
 </template>
