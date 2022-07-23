@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useUserStore } from './store/user'
 import { storeToRefs } from 'pinia'
+import { Snackbar } from '@varlet/ui'
 import dayjs from 'dayjs'
 
 const routes = [
@@ -80,11 +81,15 @@ router.beforeEach((to, from, next) => {
         document.title = to.meta.title
     }
     // 检查是否过期
-    if (jwtToken.value) {
+    if (jwtToken.value && jwtToken.value !== '') {
         const payload = jwtToken.value.split('.')[1]
-        const exp = dayjs(payload.exp)
+        const jwtObj = JSON.parse(atob(payload))
+        const exp = dayjs.unix(jwtObj.exp)
         const expire = dayjs().isAfter(exp)
-        if (expire) userStore.clearToken()
+        if (expire) {
+            Snackbar.warning('登录已过期，请重新登陆')
+            userStore.clearToken()
+        }
     }
     if (to.path === '/login') {
         if (!jwtToken.value) {
