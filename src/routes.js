@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useUserStore } from './store/user'
 import { storeToRefs } from 'pinia'
+import dayjs from 'dayjs'
 
 const routes = [
     {
@@ -78,7 +79,14 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title
     }
-    if (to.path == '/login') {
+    // 检查是否过期
+    if (jwtToken.value) {
+        const payload = jwtToken.value.split('.')[1]
+        const exp = dayjs(payload.exp)
+        const expire = dayjs().isAfter(exp)
+        if (expire) userStore.clearToken()
+    }
+    if (to.path === '/login') {
         if (!jwtToken.value) {
             return next()
         } else {
