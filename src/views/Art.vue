@@ -8,34 +8,34 @@ import { Lazy, Pagination, Virtual, Zoom } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 
 const lazyOpts = {
-    loadPrevNext: true,
-    loadOnTransitionStart: true
+  loadPrevNext: true,
+  loadOnTransitionStart: true
 }
 
 const paginationOpts = {
-    type: 'fraction'
+  type: 'fraction'
 }
 
 const modules = [Virtual, Lazy, Zoom, Pagination]
 
 let swiperRef = null
 const onSwiper = (swiper) => {
-    swiperRef = swiper
+  swiperRef = swiper
 }
 const page = ref('')
 const slideTo = (index) => {
-    swiperRef.slideTo(index - 1, 0)
+  swiperRef.slideTo(index - 1, 0)
 }
 
 let state = reactive({
-    images: []
+  images: []
 })
 
 const getImages = async () => {
-    const result = await axios.get('/art')
-    if (result.data) {
-        state.images = result.data
-    }
+  const result = await axios.get('/art')
+  if (result.data) {
+    state.images = result.data
+  }
 }
 
 getImages()
