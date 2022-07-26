@@ -41,8 +41,12 @@ html:root {
 
 #container {
   background-color: #f2f3f7;
-  min-height: calc(92vh);
+  min-height: calc(92vh - 14px);
   padding: 15px;
+}
+
+.full-width {
+  margin: 15% -15px;
 }
 
 a, a:hover, a:active, a:visited, a:link, a:focus {

@@ -16,40 +16,44 @@ const request = Axios.create({
 
 // 前置拦截器（发起请求之前的拦截）
 request.interceptors.request.use(
-    (config) => {
-        const { jwtToken } = storeToRefs(userStore)
-        if (jwtToken.value && jwtToken.value !== '') {
-            config.headers.Authorization = jwtToken.value
-        }
-        return config
-    },
-    (error) => {
-        console.log(error)
-    }
+  (config) => {
+      const { jwtToken } = storeToRefs(userStore)
+      if (jwtToken.value && jwtToken.value !== '') {
+          config.headers.Authorization = jwtToken.value
+      }
+      return config
+  },
+  (error) => {
+      console.log(error)
+  }
 )
 
 // 后置拦截器（获取到响应时的拦截）
 request.interceptors.response.use(
-    (response) => {
-        return response
-    },
-    (error) => {
-        console.log(error)
-        if (error.response.msg) {
-            error.message = error.response.msg
-            Snackbar(error.message)
-        }
+  (response) => {
+      return response
+  },
+  (error) => {
+      console.log(error)
+      if (error.response.data.msg) {
+          error.message = error.response.msg
+          Snackbar(error.message)
+      }
 
-        if (error.response.status === 401) {
-            router.push('/login')
-        }
+      if (error.response.status === 400) {
+          Snackbar.error('密码错误')
+      }
 
-        if (error.response.status === 403) {
-            router.push('/login')
-        }
+      if (error.response.status === 401) {
+          router.push('/login')
+      }
 
-        return Promise.reject(error)
-    }
+      if (error.response.status === 403) {
+          router.push('/login')
+      }
+
+      return Promise.reject(error)
+  }
 )
 
 export default request

@@ -75,8 +75,11 @@ const logout = () => {
 			</template>
 		</var-app-bar>
 		<var-popup position="left" v-model:show="pop">
-			<div class="popup-box">
-				<var-image fit="cover" ripple src="https://varlet-varletjs.vercel.app/cat.jpg" width="100%"/>
+			<div class="sidebar">
+				<div class="img">
+					<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-a5666f6b-71b9-4a4c-81fd-aaea0ac48905/5117caad-75a1-4f9d-870e-14407c77f5bf.webp"
+					     alt="">
+				</div>
 				<div @click="pop=false" class="menu-list">
 					<router-link :to="route.path" v-for="route in menu" v-ripple>
 						<i class="material-icons">{{route.icon}}</i><span class="menu">{{route.title}}</span>
@@ -94,12 +97,22 @@ const logout = () => {
 </template>
 
 <style lang="scss" scoped>
-	.popup-box {
+	.sidebar {
 		width: 250px;
+
+		.img {
+			height: 195px;
+
+			img {
+				object-fit: cover;
+				width: 100%;
+				height: 100%;
+			}
+		}
 	}
 
 	.menu-list {
-		padding: 20px 5px 20px 0;
+		padding: 15px 5px 20px 0;
 
 		a {
 			display: block;
