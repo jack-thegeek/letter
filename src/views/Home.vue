@@ -5,10 +5,17 @@ import { Snackbar } from '@varlet/ui'
 import { Dialog } from '@varlet/ui'
 import '@varlet/ui/es/dialog/style/index.js'
 import { ref, reactive } from 'vue'
+import { useUserStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
 
 const start = dayjs('2020-05-19', 'YYYY-MM-DD')
 const today = dayjs()
 const days = today.diff(dayjs(start), 'days')
+
+const userStore = useUserStore()
+const { user_id } = storeToRefs(userStore)
+
+const form = ref(null)
 
 let state = reactive({
     comments: []
@@ -56,6 +63,10 @@ const del = async (id, index) => {
     }
 }
 
+const edit = async (id, index) => {
+    form.focus()
+}
+
 getComments()
 
 </script>
@@ -67,44 +78,45 @@ getComments()
 				在一起已 {{days}} 天啦
 			</div>
 		</div>
+		<div>
+			<div class="group-name">纸短情长</div>
+			<div class="group">
+				<router-link to="/letter">
+					<i class="material-icons">favorite</i><span class="menu">情书</span>
+				</router-link>
+				<router-link to="/art">
+					<i class="material-icons">style</i><span class="menu">画集</span>
+				</router-link>
+			</div>
 
-		<div class="group-name">纸短情长</div>
-		<div class="group">
-			<router-link to="/letter">
-				<i class="material-icons">favorite</i><span class="menu">情书</span>
-			</router-link>
-			<router-link to="/art">
-				<i class="material-icons">style</i><span class="menu">画集</span>
-			</router-link>
-		</div>
+			<div class="group-name">最好的我们</div>
+			<div class="group">
+				<router-link to="/album">
+					<i class="material-icons">photo_camera</i><span class="menu">相册</span>
+				</router-link>
+				<router-link to="/footprint">
+					<i class="material-icons">explore</i><span class="menu">足迹</span>
+				</router-link>
+			</div>
 
-		<div class="group-name">最好的我们</div>
-		<div class="group">
-			<router-link to="/album">
-				<i class="material-icons">photo_camera</i><span class="menu">相册</span>
-			</router-link>
-			<router-link to="/footprint">
-				<i class="material-icons">explore</i><span class="menu">足迹</span>
-			</router-link>
-		</div>
-
-		<div class="group-name">未来可期呀</div>
-		<div class="group">
-			<router-link to="/todo">
-				<i class="material-icons">edit_calendar</i><span class="menu">愿望</span>
-			</router-link>
-			<router-link to="/lottery">
-				<i class="material-icons">widgets</i><span class="menu">抽奖</span>
-			</router-link>
-			<router-link to="/about">
-				<i class="material-icons">help</i><span class="menu">关于</span>
-			</router-link>
+			<div class="group-name">未来可期呀</div>
+			<div class="group">
+				<router-link to="/todo">
+					<i class="material-icons">edit_calendar</i><span class="menu">愿望</span>
+				</router-link>
+				<router-link to="/lottery">
+					<i class="material-icons">widgets</i><span class="menu">抽奖</span>
+				</router-link>
+				<router-link to="/about">
+					<i class="material-icons">help</i><span class="menu">关于</span>
+				</router-link>
+			</div>
 		</div>
 
 		<div class="group-name">留言板</div>
 		<div class="board">
 			<div class="dash-box">
-				<var-input :hint="false" :line="true" rows="5" textarea v-model="formData.content"/>
+				<var-input ref="form" :hint="false" :line="true" rows="5" textarea v-model="formData.content"/>
 				<div class="send">
 					<var-button text round type="primary" @click="send()">
 						<span class="material-icons">send</span>
@@ -120,7 +132,7 @@ getComments()
 			<div class="body">
 				<div>{{ comment.content }}</div>
 			</div>
-			<div class="footer" v-if="comment.user._id === 'Jack'">
+			<div class="footer" v-if="comment.user._id === user_id">
 				<span class="material-icons del" @click="del(comment._id, index)"
 				      v-ripple="{ color: 'var(--red-400)' }">
 					delete_outline
@@ -229,7 +241,7 @@ getComments()
 		.header {
 			justify-content: space-between;
 			align-items: end;
-			color: #ddd;
+			color: #a5a5a5;
 			margin-bottom: 15px;
 
 			.date {
@@ -238,11 +250,12 @@ getComments()
 		}
 
 		.body {
-			margin-bottom: 30px;
+			margin-bottom: 20px;
 		}
 
 		.footer {
 			justify-content: end;
+			padding: 5px 0;
 
 			.del, .edit {
 				border-radius: 50%;

@@ -85,6 +85,7 @@ router.beforeEach((to, from, next) => {
         const payload = jwtToken.value.split('.')[1]
         const jwtObj = JSON.parse(atob(payload))
         const exp = dayjs.unix(jwtObj.exp)
+        userStore.setUserId(jwtObj._id)
         const expire = dayjs().isAfter(exp)
         if (expire) {
             Snackbar.warning('登录已过期，请重新登陆')
