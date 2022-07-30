@@ -1,9 +1,57 @@
 <script setup>
 import dayjs from 'dayjs'
+import axios from '@/request'
+import { Snackbar } from '@varlet/ui'
+import { ref, reactive } from 'vue'
 
-const start = dayjs('2020-05-20', 'YYYY-MM-DD')
+const start = dayjs('2020-05-19', 'YYYY-MM-DD')
 const today = dayjs()
 const days = today.diff(dayjs(start), 'days')
+
+let state = reactive({
+    comments: []
+})
+
+const formData = reactive({
+    content: ''
+})
+
+const setComments = (data) => {
+    data.forEach(value => {
+        value.updated_at = dayjs(value.updated_at).format('YYYY-MM-DD HH:mm:ss')
+    })
+    data.reverse()
+    state.comments = data
+}
+
+const getComments = async () => {
+    const result = await axios.get('/comment')
+    if (result.status === 200 && result.data) {
+        setComments(result.data)
+    }
+}
+
+const send = async () => {
+    if (!formData.content) {
+        Snackbar.error('内容不能为空！')
+        return
+    }
+    const result = await axios.post('/comment', formData)
+    if (result.status === 201 && result.data) {
+        setComments(result.data)
+        formData.content = ''
+    }
+}
+
+const del = async (id, index) => {
+    const result = await axios.delete('/comment/' + id)
+    if (result.status === 204) {
+        Snackbar.success('删除成功')
+        state.comments.splice(index, 1)
+    }
+}
+
+getComments()
 
 </script>
 
@@ -35,7 +83,6 @@ const days = today.diff(dayjs(start), 'days')
 			</router-link>
 		</div>
 
-
 		<div class="group-name">未来可期呀</div>
 		<div class="group">
 			<router-link to="/todo">
@@ -49,6 +96,29 @@ const days = today.diff(dayjs(start), 'days')
 			</router-link>
 		</div>
 
+		<div class="group-name">留言板</div>
+		<div class="board">
+			<div class="dash-box">
+				<var-input :hint="false" :line="true" rows="5" textarea v-model="formData.content"/>
+				<div class="send">
+					<var-button text round type="primary" @click="send()">
+						<span class="material-icons">send</span>
+					</var-button>
+				</div>
+			</div>
+		</div>
+		<div class="card" v-for="(comment, index) in state.comments">
+			<div>{{ comment.content }}</div>
+			<var-icon @click="del(comment._id, index)" name="delete"/>
+			<div class="footer">
+				<span class="author">{{ comment.user.name }}</span>
+				<span class="date">{{ comment.updated_at }}</span>
+			</div>
+		</div>
+
+		<footer>
+			一起加油呀 (ง •̀_•́)ง
+		</footer>
 	</div>
 </template>
 <style lang="scss" scoped>
@@ -110,5 +180,50 @@ const days = today.diff(dayjs(start), 'days')
 		color: var(--hoki-400);
 		margin: 10px 0;
 		padding-left: 10px;
+	}
+
+	.board {
+		background-color: white;
+		padding: 10px;
+		margin-bottom: 15px;
+		border: 1px dot-dash #6b798e;
+
+		.dash-box {
+			border: 1px dashed;
+			padding: 8px;
+		}
+
+		.send {
+			margin-top: 10px;
+			margin-right: 5px;
+			text-align: right;
+		}
+	}
+
+	.card {
+		background: white;
+		padding: 15px 15px 10px;
+		margin-bottom: 15px;
+
+		.footer {
+			font-size: 14px;
+			color: #b4c5dc;
+			margin-top: 20px;
+		}
+
+		.author {
+			margin-right: 10px;
+		}
+	}
+
+	.var-button--round {
+		height: auto;
+	}
+
+	footer {
+		text-align: center;
+		padding: 5px 10px;
+		margin-top: 60px;
+		color: #b4c5dc;
 	}
 </style>

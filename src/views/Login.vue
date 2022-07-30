@@ -9,7 +9,7 @@ const router = useRouter()
 const userStore = useUserStore()
 
 const formData = reactive({
-    name: 'jack',
+    name: 'Jack',
     password: ''
 })
 

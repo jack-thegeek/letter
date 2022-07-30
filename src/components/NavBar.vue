@@ -101,7 +101,7 @@ const logout = () => {
 		width: 250px;
 
 		.img {
-			height: 195px;
+			height: 150px;
 
 			img {
 				object-fit: cover;
