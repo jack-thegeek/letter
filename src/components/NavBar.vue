@@ -31,7 +31,8 @@ const themes = ref(configs.themes)
 
 const init = () => {
     const style = themes.value[themeIndex.value] ? themes.value[themeIndex.value].css : themes.value[0].css
-    StyleProvider(style)
+    const css = Object.assign({}, style, configs.base_theme);
+    StyleProvider(css)
 }
 
 init()
@@ -89,7 +90,7 @@ const logout = () => {
 					</a>
 				</div>
 				<var-divider class="divider">
-					<span>power by Jack</span>
+					<span>Power By Jack</span>
 				</var-divider>
 			</div>
 		</var-popup>

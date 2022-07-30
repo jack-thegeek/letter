@@ -74,6 +74,9 @@ const configs = {
         }
 
     ],
+    base_theme: {
+      '--dialog-confirm-button-color': '#3a7afe'
+    },
     emoji_face: ['爱心']
 }
 

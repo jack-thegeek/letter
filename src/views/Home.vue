@@ -2,6 +2,8 @@
 import dayjs from 'dayjs'
 import axios from '@/request'
 import { Snackbar } from '@varlet/ui'
+import { Dialog } from '@varlet/ui'
+import '@varlet/ui/es/dialog/style/index.js'
 import { ref, reactive } from 'vue'
 
 const start = dayjs('2020-05-19', 'YYYY-MM-DD')
@@ -18,7 +20,7 @@ const formData = reactive({
 
 const setComments = (data) => {
     data.forEach(value => {
-        value.updated_at = dayjs(value.updated_at).format('YYYY-MM-DD HH:mm:ss')
+        value.updated_at = dayjs(value.updated_at).format('YYYY-MM-DD HH:mm')
     })
     data.reverse()
     state.comments = data
@@ -44,10 +46,13 @@ const send = async () => {
 }
 
 const del = async (id, index) => {
-    const result = await axios.delete('/comment/' + id)
-    if (result.status === 204) {
-        Snackbar.success('删除成功')
-        state.comments.splice(index, 1)
+    let confirm = await Dialog('确认删除？')
+    if (confirm === 'confirm') {
+        const result = await axios.delete('/comment/' + id)
+        if (result.status === 204) {
+            Snackbar.success('删除成功')
+            state.comments.splice(index, 1)
+        }
     }
 }
 
@@ -108,11 +113,22 @@ getComments()
 			</div>
 		</div>
 		<div class="card" v-for="(comment, index) in state.comments">
-			<div>{{ comment.content }}</div>
-			<var-icon @click="del(comment._id, index)" name="delete"/>
-			<div class="footer">
+			<div class="header">
 				<span class="author">{{ comment.user.name }}</span>
 				<span class="date">{{ comment.updated_at }}</span>
+			</div>
+			<div class="body">
+				<div>{{ comment.content }}</div>
+			</div>
+			<div class="footer" v-if="comment.user._id === 'Jack'">
+				<span class="material-icons del" @click="del(comment._id, index)"
+				      v-ripple="{ color: 'var(--red-400)' }">
+					delete_outline
+				</span>
+				<span class="material-icons edit" @click=""
+				      v-ripple="{ color: 'var(--steel-blue-400)' }">
+					edit_note
+				</span>
 			</div>
 		</div>
 
@@ -202,17 +218,44 @@ getComments()
 
 	.card {
 		background: white;
-		padding: 15px 15px 10px;
+		padding: 10px;
 		margin-bottom: 15px;
 
-		.footer {
+		.header, .footer {
+			display: flex;
 			font-size: 14px;
-			color: #b4c5dc;
-			margin-top: 20px;
 		}
 
-		.author {
-			margin-right: 10px;
+		.header {
+			justify-content: space-between;
+			align-items: end;
+			color: #ddd;
+			margin-bottom: 15px;
+
+			.date {
+				font-size: 12px;
+			}
+		}
+
+		.body {
+			margin-bottom: 30px;
+		}
+
+		.footer {
+			justify-content: end;
+
+			.del, .edit {
+				border-radius: 50%;
+				padding: 8px;
+			}
+
+			.del {
+				color: var(--red-500);
+			}
+
+			.edit {
+				color: var(--steel-blue-600);
+			}
 		}
 	}
 
@@ -224,6 +267,7 @@ getComments()
 		text-align: center;
 		padding: 5px 10px;
 		margin-top: 60px;
-		color: #b4c5dc;
+		color: #ccc;
+		font-size: 14px;
 	}
 </style>
