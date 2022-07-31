@@ -1,9 +1,6 @@
 <script setup>
 import dayjs from 'dayjs'
 import axios from '@/request'
-import { Snackbar } from '@varlet/ui'
-import { Dialog } from '@varlet/ui'
-import '@varlet/ui/es/dialog/style/index.js'
 import { ref, reactive, onMounted } from 'vue'
 import Comment from '@/components/Comment.vue'
 

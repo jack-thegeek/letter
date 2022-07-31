@@ -4,7 +4,7 @@ import axios from '@/request'
 import { Snackbar } from '@varlet/ui'
 import { Dialog } from '@varlet/ui'
 import '@varlet/ui/es/dialog/style/index.js'
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 
@@ -17,11 +17,28 @@ const props = defineProps({
         type: Array,
         default: []
     },
+    model: {
+        type: String,
+        default: ''
+    },
+    mid: {
+        type: String,
+        default: ''
+    }
 })
 
 let state = reactive({
     comments: []
 })
+
+let base_url = '/comment'
+const setBaseUrl = ()=> {
+    if (props.model && props.mid) {
+        base_url = '/' + props.model + '/' + props.mid + '/comment'
+    }
+}
+
+setBaseUrl()
 
 const setComments = (data) => {
     data.forEach(value => {
@@ -30,7 +47,6 @@ const setComments = (data) => {
     data.reverse()
     state.comments = data
 }
-
 setComments(props.comments)
 
 const formData = reactive({
@@ -42,7 +58,7 @@ const send = async () => {
         Snackbar.error('内容不能为空！')
         return
     }
-    const result = await axios.post('/comment', formData)
+    const result = await axios.post(base_url, formData)
     if (result.status === 201 && result.data) {
         setComments(result.data)
         formData.content = ''
@@ -52,7 +68,7 @@ const send = async () => {
 const del = async (id, index) => {
     let confirm = await Dialog('确认删除？')
     if (confirm === 'confirm') {
-        const result = await axios.delete('/comment/' + id)
+        const result = await axios.delete(base_url + '/' + id)
         if (result.status === 204) {
             Snackbar.success('删除成功')
             state.comments.splice(index, 1)
@@ -83,12 +99,19 @@ const save = async () => {
         Snackbar.error('内容不能为空！')
         return
     }
-    const result = await axios.put('/comment/' + edit_data.edit_id, { content: edit_data.content })
+    const result = await axios.put(base_url + '/' + edit_data.edit_id, { content: edit_data.content })
     if (result.status === 200 && result.data) {
-        state.comments[edit_data.edit_index].content = result.data.content
+        setComments(result.data)
     }
 }
 
+watch(() => props.mid, (newValue, oldValue) => {
+      if (newValue) {
+          setBaseUrl()
+          state.comments = props.comments
+      }
+  }
+)
 </script>
 
 <template>

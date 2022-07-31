@@ -1,17 +1,86 @@
 <script setup>
-import configs from '../configs'
-import { ref } from 'vue'
+import dayjs from 'dayjs'
+import axios from '@/request'
+import { ref, reactive, onMounted } from 'vue'
+import { useUserStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
+import Comment from '@/components/Comment.vue'
 
-const emoji_face = ref(configs.emoji_face)
+const userStore = useUserStore()
+const { user_id } = storeToRefs(userStore)
+
+let state = reactive({
+    letters: [],
+    current: null,
+    current_index: '',
+    total: ''
+})
+
+const setLetters = (data) => {
+    data.forEach(value => {
+        value.created_at = dayjs(value.created_at).format('YYYY-MM-DD HH:mm')
+        value.comments.forEach(v => {
+            v.created_at = dayjs(value.created_at).format('YYYY-MM-DD HH:mm')
+        })
+    })
+    data.reverse()
+    state.letters = data
+    state.current = data[0]
+}
+
+const getLetters = async () => {
+    const result = await axios.get('/letter')
+    if (result.status === 200 && result.data) {
+        setLetters(result.data)
+        state.current_index = 1
+        state.total = result.data.length
+    }
+}
+
+getLetters()
+
 </script>
 <template>
 	<div>
-		<var-card description="如果华佗再世,崇洋都被医治,外邦来学汉字,激发我民族意识。马钱子、决明子、苍耳子，还有莲子；黄药子、苦豆子、川楝子，我要面子。用我的方式，改写一部历史。没什么别的事，跟着我念几个字。山药当归枸杞 GO，山药 当归 枸杞 GO，看我抓一把中药，服下一帖骄傲~"
-		          title="本草纲目"
-		/>
-		<img :src="'src/assets/images/emoji_face/'+face" alt="" v-for="face in emoji_face" width="26">
+		<div class="letter">
+			<div class="body" v-if="state.current">{{ state.current.content }}</div>
+		</div>
+		<div class="pagination">
+			<var-pagination @change="(current)=>{state.current = state.letters[current-1]}"
+			                :current="state.current_index" :size="1" :total="state.total"
+			                :simple="false" :show-size-changer="false"/>
+		</div>
+		<div class="comment">留言</div>
+		<Comment v-if="state.current" :comments="state.current.comments" :model="'letter'" :mid="state.current._id"/>
 	</div>
 </template>
 <style lang="scss" scoped>
+	.letter {
+		padding: 16px;
+		line-height: 1.6;
+		margin-bottom: 20px;
+		border-radius: 5px;
+		background: url("@/assets/images/letter_bg.jpg") 0 0 / 100% auto;
+
+		.body {
+			font-size: 14px;
+			min-height: 150px;
+		}
+	}
+
+	.pagination {
+		padding: 8px;
+		margin: 20px 0;
+
+		.var-pagination {
+			justify-content: flex-end;
+		}
+	}
+
+	.comment {
+		color: var(--hoki-400);
+		margin: 30px 0 10px;
+		padding-left: 10px;
+	}
 
 </style>
