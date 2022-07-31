@@ -4,7 +4,7 @@ import axios from '@/request'
 import { Snackbar } from '@varlet/ui'
 import { Dialog } from '@varlet/ui'
 import '@varlet/ui/es/dialog/style/index.js'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 
@@ -14,8 +14,6 @@ const days = today.diff(dayjs(start), 'days')
 
 const userStore = useUserStore()
 const { user_id } = storeToRefs(userStore)
-
-const form = ref(null)
 
 let state = reactive({
     comments: []
@@ -63,8 +61,30 @@ const del = async (id, index) => {
     }
 }
 
+let edit_data = reactive({
+    content: '',
+    edit_id: '',
+    edit_index: ''
+})
+const isEdit = ref(false)
+const editForm = ref(null)
+
 const edit = async (id, index) => {
-    form.focus()
+    edit_data.content = state.comments[index].content
+    edit_data.edit_id = id
+    edit_data.edit_index = index
+    isEdit.value = true
+    setTimeout(() => {
+        editForm.value.focus()
+    })
+}
+
+const save = async () => {
+    isEdit.value = false
+    const result = await axios.put('/comment/' + edit_data.edit_id, { content: edit_data.content })
+    if (result.status === 200 && result.data) {
+        state.comments[edit_data.edit_index].content = result.data.content
+    }
 }
 
 getComments()
@@ -116,7 +136,7 @@ getComments()
 		<div class="group-name">留言板</div>
 		<div class="board">
 			<div class="dash-box">
-				<var-input ref="form" :hint="false" :line="true" rows="5" textarea v-model="formData.content"/>
+				<var-input :hint="false" :line="true" rows="5" textarea v-model="formData.content"/>
 				<div class="send">
 					<var-button text round type="primary" @click="send()">
 						<span class="material-icons">send</span>
@@ -137,7 +157,7 @@ getComments()
 				      v-ripple="{ color: 'var(--red-400)' }">
 					delete_outline
 				</span>
-				<span class="material-icons edit" @click=""
+				<span class="material-icons edit" @click="edit(comment._id, index)"
 				      v-ripple="{ color: 'var(--steel-blue-400)' }">
 					edit_note
 				</span>
@@ -147,6 +167,12 @@ getComments()
 		<footer>
 			一起加油呀 (ง •̀_•́)ง
 		</footer>
+
+		<var-dialog title="修改" v-model:show="isEdit" @confirm="save()"
+		            dialog-class="edit-dialog" confirm-button-text="保存">
+			<var-input ref="editForm" rows="5" textarea v-model="edit_data.content"/>
+		</var-dialog>
+
 	</div>
 </template>
 <style lang="scss" scoped>

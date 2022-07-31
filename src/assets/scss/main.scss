@@ -79,3 +79,7 @@ a, a:hover, a:active, a:visited, a:link, a:focus {
   transform: translateX(-30%);
   opacity: 0;
 }
+
+.edit-dialog {
+  --dialog-width: 90vw
+}
