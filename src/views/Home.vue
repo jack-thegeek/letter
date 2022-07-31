@@ -80,7 +80,11 @@ const edit = async (id, index) => {
 }
 
 const save = async () => {
-    isEdit.value = false
+    if (!edit_data.content) {
+        Snackbar.error('内容不能为空！')
+        return
+    }
+    console.log(edit_data.content)
     const result = await axios.put('/comment/' + edit_data.edit_id, { content: edit_data.content })
     if (result.status === 200 && result.data) {
         state.comments[edit_data.edit_index].content = result.data.content
@@ -150,7 +154,7 @@ getComments()
 				<span class="date">{{ comment.updated_at }}</span>
 			</div>
 			<div class="body">
-				<div>{{ comment.content }}</div>
+				<div v-html="comment.content"></div>
 			</div>
 			<div class="footer" v-if="comment.user._id === user_id">
 				<span class="material-icons del" @click="del(comment._id, index)"
@@ -277,10 +281,11 @@ getComments()
 
 		.body {
 			margin-bottom: 20px;
+			white-space: pre-wrap;
 		}
 
 		.footer {
-			justify-content: end;
+			justify-content: flex-end;
 			padding: 5px 0;
 
 			.del, .edit {
