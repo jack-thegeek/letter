@@ -47,7 +47,7 @@ const setComments = (data) => {
 	}
 	emits('update:comments', data);
 }
-setComments(props.comments)
+if (props.comments.length) setComments(props.comments)
 
 const formData = reactive({
     content: ''
@@ -126,7 +126,7 @@ watch(() => props.mid, (newValue, oldValue) => {
 				</div>
 			</div>
 		</div>
-		<div v-if="props.comments.length" class="card" v-for="(comment, index) in props.comments">
+		<div class="card" v-for="(comment, index) in props.comments">
 			<div class="header">
 				<span class="author">{{ comment.user.name }}</span>
 				<span class="date">{{ comment.created_at }}</span>
@@ -145,6 +145,9 @@ watch(() => props.mid, (newValue, oldValue) => {
 				</span>
 			</div>
 		</div>
+        <div class="no-comment" v-if="props.comments.length === 0">
+            暂无留言
+        </div>
 		<var-dialog title="修改" v-model:show="isEdit" @confirm="save()"
 		            dialog-class="edit-dialog" confirm-button-text="保存">
 			<var-input ref="editForm" rows="5" textarea v-model="edit_data.content"/>
@@ -215,4 +218,12 @@ watch(() => props.mid, (newValue, oldValue) => {
 			}
 		}
 	}
+
+    .no-comment {
+        padding: 50px 10px;
+        border: 1px dashed #ddd;
+        text-align: center;
+        font-size: 18px;
+        color: #a2a2a2;
+    }
 </style>
