@@ -11,7 +11,7 @@ import { storeToRefs } from 'pinia'
 const userStore = useUserStore()
 const { user_id } = storeToRefs(userStore)
 
-const emits = defineEmits(['update:comments']);
+const emits = defineEmits(['update:comments'])
 // defineEmits和defineProps在<script setup>中自动可用，无需导入
 const props = defineProps({
     comments: {
@@ -29,7 +29,7 @@ const props = defineProps({
 })
 
 let base_url = '/comment'
-const setBaseUrl = ()=> {
+const setBaseUrl = () => {
     if (props.model && props.mid) {
         base_url = '/' + props.model + '/' + props.mid + '/comment'
     }
@@ -38,16 +38,12 @@ const setBaseUrl = ()=> {
 setBaseUrl()
 
 const setComments = (data) => {
-	if (!Array.isArray(data)) data = data.comments
-	// 如果日期类型不是 number，则表示已转换过
-	if (typeof data[0].created_at === 'number') {
-		data.forEach(value => {
-			value.created_at = dayjs(value.created_at).format('YYYY-MM-DD HH:mm')
-		})
-	}
-	emits('update:comments', data);
+    if (!Array.isArray(data)) data = data.comments
+    data.forEach(value => {
+        value.created_at = dayjs(value.created_at).format('YYYY-MM-DD HH:mm')
+    })
+    emits('update:comments', data)
 }
-if (props.comments.length) setComments(props.comments)
 
 const formData = reactive({
     content: ''
@@ -71,7 +67,7 @@ const del = async (id, index) => {
         const result = await axios.delete(base_url + '/' + id)
         if (result.status === 204) {
             Snackbar.success('删除成功')
-			props.comments.splice(index, 1)
+            props.comments.splice(index, 1)
         }
     }
 }
@@ -85,7 +81,7 @@ const isEdit = ref(false)
 const editForm = ref(null)
 
 const edit = async (id, index) => {
-	edit_data.content = props.comments[index].content
+    edit_data.content = props.comments[index].content
     edit_data.edit_id = id
     edit_data.edit_index = index
     isEdit.value = true
@@ -108,7 +104,6 @@ const save = async () => {
 watch(() => props.mid, (newValue, oldValue) => {
       if (newValue) {
           setBaseUrl()
-		  setComments(props.comments)
       }
   }
 )
@@ -145,9 +140,9 @@ watch(() => props.mid, (newValue, oldValue) => {
 				</span>
 			</div>
 		</div>
-        <div class="no-comment" v-if="props.comments.length === 0">
-            暂无留言
-        </div>
+		<div class="no-comment" v-if="props.comments.length === 0">
+			暂无留言
+		</div>
 		<var-dialog title="修改" v-model:show="isEdit" @confirm="save()"
 		            dialog-class="edit-dialog" confirm-button-text="保存">
 			<var-input ref="editForm" rows="5" textarea v-model="edit_data.content"/>
@@ -219,11 +214,11 @@ watch(() => props.mid, (newValue, oldValue) => {
 		}
 	}
 
-    .no-comment {
-        padding: 50px 10px;
-        border: 1px dashed #ddd;
-        text-align: center;
-        font-size: 18px;
-        color: #a2a2a2;
-    }
+	.no-comment {
+		padding: 50px 10px;
+		border: 1px dashed #ddd;
+		text-align: center;
+		font-size: 18px;
+		color: #a2a2a2;
+	}
 </style>

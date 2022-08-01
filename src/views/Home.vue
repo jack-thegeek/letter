@@ -16,6 +16,9 @@ const getComments = async () => {
     const result = await axios.get('/comment')
     if (result.status === 200 && result.data) {
         state.comments = result.data
+        state.comments.forEach(value => {
+            value.created_at = dayjs(value.created_at).format('YYYY-MM-DD HH:mm')
+        })
     }
 }
 
@@ -66,7 +69,7 @@ getComments()
 		</div>
 
 		<div class="group-name">留言板</div>
-		<Comment v-model:comments="state.comments" />
+		<Comment v-if="state.comments" v-model:comments="state.comments" />
 
 		<footer>
 			一起加油呀 (ง •̀_•́)ง

@@ -19,8 +19,13 @@ let state = reactive({
 const getLetters = async () => {
     const result = await axios.get('/letter')
     if (result.status === 200 && result.data) {
-		state.letters = result.data
-		state.current = state.letters[0]
+        result.data.forEach(value => {
+            value.comments.forEach(v => {
+                v.created_at = dayjs(value.created_at).format('YYYY-MM-DD HH:mm')
+            })
+        })
+        state.letters = result.data
+        state.current = state.letters[0]
         state.current_index = 1
         state.total = result.data.length
     }
@@ -40,7 +45,8 @@ getLetters()
 			                :simple="false" :show-size-changer="false"/>
 		</div>
 		<div class="comment">留言</div>
-		<Comment v-model:comments="state.current.comments" :model="'letter'" :mid="state.current._id"/>
+		<Comment v-if="state.current" v-model:comments="state.current.comments" :model="'letter'"
+		         :mid="state.current._id"/>
 	</div>
 </template>
 <style lang="scss" scoped>
