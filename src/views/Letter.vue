@@ -40,8 +40,7 @@ getLetters()
 			                :simple="false" :show-size-changer="false"/>
 		</div>
 		<div class="comment">留言</div>
-		<Comment v-if="state.current" v-model:comments="state.current.comments" :model="'letter'"
-				 :mid="state.current._id"/>
+		<Comment v-model:comments="state.current.comments" :model="'letter'" :mid="state.current._id"/>
 	</div>
 </template>
 <style lang="scss" scoped>

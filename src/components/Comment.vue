@@ -41,7 +41,6 @@ const setComments = (data) => {
 	if (!Array.isArray(data)) data = data.comments
 	// 如果日期类型不是 number，则表示已转换过
 	if (typeof data[0].created_at === 'number') {
-		data.reverse()
 		data.forEach(value => {
 			value.created_at = dayjs(value.created_at).format('YYYY-MM-DD HH:mm')
 		})
@@ -127,7 +126,7 @@ watch(() => props.mid, (newValue, oldValue) => {
 				</div>
 			</div>
 		</div>
-		<div class="card" v-for="(comment, index) in props.comments">
+		<div v-if="props.comments.length" class="card" v-for="(comment, index) in props.comments">
 			<div class="header">
 				<span class="author">{{ comment.user.name }}</span>
 				<span class="date">{{ comment.created_at }}</span>

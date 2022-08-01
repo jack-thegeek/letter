@@ -66,7 +66,7 @@ getComments()
 		</div>
 
 		<div class="group-name">留言板</div>
-		<Comment v-if="state.comments.length" v-model:comments="state.comments" />
+		<Comment v-model:comments="state.comments" />
 
 		<footer>
 			一起加油呀 (ง •̀_•́)ง
