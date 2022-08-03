@@ -53,6 +53,7 @@ getFootprints()
 	.content {
 		line-height: 1.6;
 		text-align: justify;
+		padding-right: 10px;
 		/*background: white;*/
 		/*padding: 10px 10px 15px;*/
 		/*border-radius: 5px;*/

@@ -3,7 +3,8 @@
 		<img alt="" class="logo" src="@/assets/images/logo.svg">
 		<h1>情 书</h1>
 		<p class="version">5.0</p>
-		<p class="content">何同学倾心制作</p>
+		<p class="content">🥳 何同学倾心制作</p>
+		<p class="content">🎉 网页版隆重发布</p>
 	</div>
 </template>
 <style lang="scss" scoped>
@@ -34,9 +35,13 @@
 		}
 
 		.version, .content {
-			font-weight: 100;
 			margin-top: 5px;
+			color: rgba(0, 0, 0, 0.6);
+		}
+
+		.version {
 			color: rgba(0, 0, 0, 0.4);
 		}
+
 	}
 </style>

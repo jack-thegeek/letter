@@ -42,6 +42,7 @@ getLetters()
 		<div class="pagination">
 			<var-pagination @change="(current)=>{state.current = state.letters[current-1]}"
 			                :current="state.current_index" :size="1" :total="state.total"
+			                :max-pager-count="1"
 			                :simple="false" :show-size-changer="false"/>
 		</div>
 		<div class="comment">留言</div>

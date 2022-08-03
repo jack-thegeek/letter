@@ -1,6 +1,15 @@
 const configs = {
     themes: [
         {
+            name: '空青',
+            code: 'var(--hoki-700)',
+            css: {
+                '--color-primary': 'var(--hoki-700)',
+                '--menu-bg': 'var(--hoki-200)',
+                '--color-text': 'var(--hoki-900)'
+            }
+        },
+        {
             name: '海棠',
             code: 'var(--red-700)',
             css: {
@@ -37,21 +46,12 @@ const configs = {
             }
         },
         {
-            name: '空青',
-            code: 'var(--hoki-700)',
-            css: {
-                '--color-primary': 'var(--hoki-700)',
-                '--menu-bg': 'var(--hoki-200)',
-                '--color-text': 'var(--hoki-900)'
-            }
-        },
-        {
             name: '东方既白',
             code: 'var(--polo-blue-700)',
             css: {
                 '--color-primary': 'var(--polo-blue-700)',
                 '--menu-bg': 'var(--polo-blue-200)',
-                '--color-text': 'var(--blue-900)'
+                '--color-text': 'var(--polo-blue-900)'
             }
         },
         {

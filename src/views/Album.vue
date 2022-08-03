@@ -110,6 +110,7 @@ getImages()
 
 		.content {
 			line-height: 1.8;
+			min-height: 50px;
 		}
 
 		.date {
