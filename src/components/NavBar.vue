@@ -78,7 +78,7 @@ const logout = () => {
 		<var-popup position="left" v-model:show="pop">
 			<div class="sidebar">
 				<div class="img">
-					<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-a5666f6b-71b9-4a4c-81fd-aaea0ac48905/5117caad-75a1-4f9d-870e-14407c77f5bf.webp"
+					<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-a5666f6b-71b9-4a4c-81fd-aaea0ac48905/99ef47fe-8414-48e9-a4d1-55d907051b17.jpg"
 					     alt="">
 				</div>
 				<div @click="pop=false" class="menu-list">
