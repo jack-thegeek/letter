@@ -10,6 +10,11 @@ const userStore = useUserStore()
 const { themeIndex } = storeToRefs(userStore)
 const router = useRouter()
 const routes = router.getRoutes()
+let current_path = ref(router.currentRoute.value.path)
+router.beforeEach((to,from,next) => {
+    current_path.value = to.path
+	next()
+})
 let menu = ref([])
 routes.forEach((route) => {
     if (route.name) {
@@ -31,7 +36,7 @@ const themes = ref(configs.themes)
 
 const init = () => {
     const style = themes.value[themeIndex.value] ? themes.value[themeIndex.value].css : themes.value[0].css
-    const css = Object.assign({}, style, configs.base_theme);
+    const css = Object.assign({}, style, configs.base_theme)
     StyleProvider(css)
 }
 
@@ -40,6 +45,10 @@ init()
 const toggleTheme = (index) => {
     StyleProvider(themes.value[index].css)
     userStore.setTheme(index)
+}
+
+const goBackHome = () => {
+    router.push('/')
 }
 
 const logout = () => {
@@ -75,6 +84,11 @@ const logout = () => {
 				</var-button>
 			</template>
 		</var-app-bar>
+		<div class="go-back-home" v-ripple @click="goBackHome()" v-if="current_path !== '/'">
+			<span class="material-icons">
+				home
+			</span>
+		</div>
 		<var-popup position="left" v-model:show="pop">
 			<div class="sidebar">
 				<div class="img">
@@ -164,5 +178,18 @@ const logout = () => {
 			border-radius: 5px;
 			width: 35vw;
 		}
+	}
+
+	.go-back-home {
+		position: fixed;
+		z-index: 10;
+		right: 0;
+		bottom: 30%;
+		padding: 5px;
+		border: 1px solid #ddd;
+		border-radius: 5px 0 0 5px;
+		border-right: none;
+		background: white;
+		box-shadow: 5px 5px 5px #ddd;
 	}
 </style>
