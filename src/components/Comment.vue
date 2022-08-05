@@ -60,6 +60,17 @@ const send = async () => {
         formData.content = ''
     }
 }
+const refresh = async () => {
+    let get_url = base_url
+    if (props.model && props.mid) {
+        get_url = '/' + props.model + '/' + props.mid
+    }
+    const result = await axios.get(get_url)
+    if (result.status === 200 && result.data) {
+        setComments(result.data)
+        Snackbar.success('留言已刷新')
+    }
+}
 
 const del = async (id, index) => {
     let confirm = await Dialog('确认删除？')
@@ -115,6 +126,9 @@ watch(() => props.mid, (newValue, oldValue) => {
 			<div class="dash-box">
 				<var-input :hint="false" :line="true" rows="5" textarea v-model="formData.content"/>
 				<div class="send">
+					<var-button text round type="primary" @click="refresh()">
+						<span class="material-icons">refresh</span>
+					</var-button>
 					<var-button text round type="primary" @click="send()">
 						<span class="material-icons">send</span>
 					</var-button>
