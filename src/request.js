@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 const userStore = useUserStore()
-const baseURL = 'https://vercel-mongodb-chi.vercel.app/api'
+const baseURL = 'https://www.abigailgilr.my.id/api'
 // const baseURL = 'http://127.0.0.1:3003/api'
 
 const request = Axios.create({
